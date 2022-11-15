@@ -53,8 +53,8 @@ export class WorkSessionService {
         };
     }
 
-    async join(joinWorkSession: JoinWorkSessionDto) {
-        const workSession = await this.getByCode(joinWorkSession.code);
+    async join(code: string) {
+        const workSession = await this.getByCode(code);
         if (workSession.status == WorkSessionStatus.ENDED)
             throw new HttpException({ 
                 status: HttpStatus.BAD_REQUEST, 

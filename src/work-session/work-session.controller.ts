@@ -18,12 +18,17 @@ export class WorkSessionController {
 
   @Post('join')
   join(@Body() joinWorkSessionDto: JoinWorkSessionDto) {
-    return this.workSessionService.join(joinWorkSessionDto);
+    return this.workSessionService.join(joinWorkSessionDto.code);
   }
 
   @Post('finish')
   finish(@Body() finishWorkSessionDto: FinishWorkSessionDto) {
     return this.workSessionService.finish(finishWorkSessionDto);
+  }
+
+  @Get(':code/join')
+  joinByCode(@Param('code') code: string) {
+    return this.workSessionService.join(code);
   }
 
   @Get(':code/commands')
