@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Command" ALTER COLUMN "numberOfPeople" DROP NOT NULL,
+ALTER COLUMN "discount" DROP NOT NULL,
+ALTER COLUMN "finalPrice" DROP NOT NULL,
+ALTER COLUMN "paymentMethod" DROP NOT NULL;

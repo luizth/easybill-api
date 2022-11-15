@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------
+// Models
+//
+model WorkSession {
+  id            Int       @id @default(autoincrement())
+  code          String    @unique
+  title         String
+  date          String
+  dayOfWeek     DayOfWeek
+  status        WorkSessionStatus
+  elapsedTime   Int?
+  income        Decimal?  @db.Decimal(10, 2)
+  commands      Command[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deleted       Boolean   @default(false)
+}
+
+model Command {
+  id              Int             @id @default(autoincrement())
+  title           String
+  numberOfPeople  Int?
+  totalPrice      Decimal         @db.Decimal(10, 2)
+  discount        Decimal?        @db.Decimal(10, 2)
+  finalPrice      Decimal?        @db.Decimal(10, 2)
+  paymentMethod   PaymentMethod?
+  status          CommandStatus
+  workSession     WorkSession     @relation(fields: [workSessionId], references: [id])
+  workSessionId   Int
+  commandItems    CommandItem[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deleted         Boolean         @default(false)
+}
+
+model CommandItem {
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  totalPrice  Decimal   @db.Decimal(10, 2)
+  productId   String    // product Id is external
+  command     Command   @relation(fields: [commandId], references: [id])
+  commandId   Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deleted     Boolean   @default(false)
+}
+
+// ------------------------------------------------
+// Enums
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum WorkSessionStatus {
+  IN_PROGRESS
+  ENDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  MONEY
+  PIX
+}
+
+enum CommandStatus {
+  OPEN
+  CLOSED
+}
