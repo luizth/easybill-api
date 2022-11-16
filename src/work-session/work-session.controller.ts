@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { WorkSessionService } from './work-session.service';
 
 import { FinishWorkSessionDto } from './dto/finish-work-session.dto';
 import { JoinWorkSessionDto } from './dto/join-work-session.dto';
+import { RemoveWorkSessionDto } from './dto/remove-work-session.dto';
 import { StartWorkSessionDto } from './dto/start-work-session.dto';
 import { OpenCommandDto } from '../command/dto/open-command.dto';
 
@@ -26,7 +27,12 @@ export class WorkSessionController {
     return this.workSessionService.finish(finishWorkSessionDto);
   }
 
-  @Get(':code/join')
+  @Post('remove')
+  delete(@Body() removeWorkSessionDto: RemoveWorkSessionDto) {
+    return this.workSessionService.remove(removeWorkSessionDto);
+  }
+
+  @Get(':code')
   joinByCode(@Param('code') code: string) {
     return this.workSessionService.join(code);
   }

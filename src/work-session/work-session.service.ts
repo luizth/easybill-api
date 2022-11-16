@@ -10,6 +10,7 @@ import { WorkSession } from './entities/work-session.entity';
 
 import { FinishWorkSessionDto } from './dto/finish-work-session.dto';
 import { JoinWorkSessionDto } from './dto/join-work-session.dto';
+import { RemoveWorkSessionDto } from './dto/remove-work-session.dto';
 import { StartWorkSessionDto } from './dto/start-work-session.dto';
 import { OpenCommandDto } from '../command/dto/open-command.dto';
 
@@ -106,6 +107,14 @@ export class WorkSessionService {
             'status': updatedWorkSession.status,
             'elapsedTime': updatedWorkSession.elapsedTime,
             'income': income
+        }
+    }
+
+    async remove(removeWorkSessionDto: RemoveWorkSessionDto) {
+        const workSession = await this.getByCode(removeWorkSessionDto.code);
+        await this.prisma.workSession.delete({ where: { id: workSession.id } })
+        return {
+            'code': removeWorkSessionDto.code
         }
     }
 

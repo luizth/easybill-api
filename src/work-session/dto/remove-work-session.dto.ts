@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class FinishWorkSessionDto {
+export class RemoveWorkSessionDto {
     @ApiProperty({ required: true })
     code: string;
 }
