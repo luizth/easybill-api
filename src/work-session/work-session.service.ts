@@ -118,6 +118,17 @@ export class WorkSessionService {
         }
     }
 
+    async getIncome(code: string) {
+        const commands = await this.getCommands(code);
+
+        var income = 0;
+        for (const command of commands) {
+            income += +command['totalPrice'];
+        }
+
+        return {'income': income};
+    }
+
     async getCommands(code: string) {
         const workSession = await this.getByCode(code);
         return await this.commandSvc.getCommandsByWorkSessionId(workSession.id);

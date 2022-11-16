@@ -28,7 +28,6 @@ export class CommandController {
 
   @Post(':id/items')
   addItem(@Param('id') id: string, @Body() addCommandItemDto: AddCommandItemDto) {
-    console.log(addCommandItemDto)
     return this.commandService.addItem(+id, addCommandItemDto);
   }
 

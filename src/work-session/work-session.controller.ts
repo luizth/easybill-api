@@ -37,6 +37,11 @@ export class WorkSessionController {
     return this.workSessionService.join(code);
   }
 
+  @Get(':code/preview-income')
+  previewIncome(@Param('code') code: string) {
+    return this.workSessionService.getIncome(code);
+  }
+
   @Get(':code/commands')
   getCommands(@Param('code') code: string) {
     return this.workSessionService.getCommands(code);
