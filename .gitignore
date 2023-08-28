@@ -39,4 +39,4 @@ lerna-debug.log*
 
 # Other
 package-lock.json
-.env
+#.env
