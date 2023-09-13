@@ -45,16 +45,30 @@ model Command {
   deleted         Boolean         @default(false)
 }
 
+model Product {
+  id            Int       @id @default(autoincrement())
+  code          String    @unique
+  title         String
+  price         Decimal   @db.Decimal(10, 2)
+  category      String
+  commandItems  CommandItem[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deleted       Boolean   @default(false)
+}
+
 model CommandItem {
-  id          Int       @id @default(autoincrement())
-  quantity    Int
-  totalPrice  Decimal   @db.Decimal(10, 2)
-  productId   String    // product Id is external
   command     Command   @relation(fields: [commandId], references: [id])
   commandId   Int
+  product     Product   @relation(fields: [productId], references: [id])
+  productId   Int
+  quantity    Int
+  totalPrice  Decimal   @db.Decimal(10, 2)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deleted     Boolean   @default(false)
+
+  @@id([commandId, productId])
 }
 
 // ------------------------------------------------

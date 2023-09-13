@@ -1,36 +1,42 @@
 [
     {
         "id": "1",
+        "code": "1",
         "title": "Expresso",
         "category": "Cafés",
         "price": 5.00
     },
     {
         "id": "2",
+        "code": "2",
         "title": "Carioca",
         "category": "Cafés",
         "price": 5.00
     },
     {
         "id": "3",
+        "code": "3",
         "title": "Café com Leite",
         "category": "Cafés",
         "price": 8.00
     },
     {
         "id": "4",
+        "code": "4",
         "title": "Capuccino",
         "category": "Cafés",
         "price": 10.00
     },
     {
         "id": "5",
+        "code": "5",
         "title": "Chocolate Quente",
         "category": "Cafés",
         "price": 10.00
     },
     {
         "id": "6",
+        "code": "6",
         "title": "Mochaccino",
         "category": "Cafés",
         "price": 12.00
