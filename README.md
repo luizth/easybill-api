@@ -43,6 +43,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+### Running locally
+
+If you are running locally, type `localhost:3000/` in your browser. You should see the `Hello Dev!` page.
+
+To see the swagger documentation, type `localhost:3000/api`.
+
+
 ## Test
 
 ```bash

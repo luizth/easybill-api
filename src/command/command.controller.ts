@@ -31,13 +31,13 @@ export class CommandController {
     return this.commandService.addItem(+id, addCommandItemDto);
   }
 
-  @Put(':id/items/:itemId')
-  updateItem(@Param('id') id: string, @Param('itemId') itemId: string, @Body() updateCommandItemDto: UpdateCommandItemDto) {
-    return this.commandService.updateItem(+id, +itemId, updateCommandItemDto);
+  @Put(':id/items/:productId')
+  updateItem(@Param('id') id: string, @Param('productId') productId: string, @Body() updateCommandItemDto: UpdateCommandItemDto) {
+    return this.commandService.updateItem(+id, +productId, updateCommandItemDto);
   }
 
-  @Delete(':id/items/:itemId')
-  removeItem(@Param('id') id: string, @Param('itemId') itemId: string) {
-    return this.commandService.removeItem(+id, +itemId);
+  @Delete(':id/items/:productId')
+  removeItem(@Param('id') id: string, @Param('productId') productId: string) {
+    return this.commandService.removeItem(+id, +productId);
   }
 }

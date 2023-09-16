@@ -17,6 +17,15 @@ export class CommandItemService {
         private readonly productSvc: ProductService
     ) {}
 
+    async getItem(commandId: number, productId: number) {
+        const item = await this.prisma.commandItem.findUnique({ where: { commandId_productId: {commandId: commandId, productId: productId} } });
+        return {
+            'quantity': item.quantity,
+            'totalPrice': item.totalPrice,
+            'productId': productId
+        };
+    }
+
     async add(commandId: number, addCommandItemDto: AddCommandItemDto) {
         const product: Product = await this.productSvc.getProduct(addCommandItemDto.productId);
         if (product == null)
@@ -24,39 +33,38 @@ export class CommandItemService {
 
         var commandItem = new CommandItem();
         commandItem.quantity = addCommandItemDto.quantity;
-        commandItem.totalPrice = Number(product.price * commandItem.quantity);
+        commandItem.totalPrice = Number(product.price) * commandItem.quantity;
         commandItem.productId = addCommandItemDto.productId;
         commandItem.commandId = commandId;
 
         const createdCommandItem = await this.prisma.commandItem.create({ data: commandItem });
         return {
-            'id': createdCommandItem.id,
             'quantity': createdCommandItem.quantity,
             'totalPrice': createdCommandItem.totalPrice,
+            'commandId': createdCommandItem.commandId,
             'productId': createdCommandItem.productId
         };
     }
 
-    async update(id: number, updateCommandItemDto: UpdateCommandItemDto) {
-        const item = await this.prisma.commandItem.findUnique({ where: {id} });
-        const product = await this.productSvc.getProduct(item.productId);
+    async update(commandId: number, productId: number, updateCommandItemDto: UpdateCommandItemDto) {
+        const product = await this.productSvc.getProduct(productId);
 
         const data = {
             "quantity": updateCommandItemDto.quantity,
-            "totalPrice": product.price * updateCommandItemDto.quantity
+            "totalPrice": Number(product.price) * updateCommandItemDto.quantity
         };
 
-        const updatedCommandItem = await this.prisma.commandItem.update({ where: { id }, data: data });
+        const updatedCommandItem = await this.prisma.commandItem.update({ where: { commandId_productId: {commandId: commandId, productId: productId} }, data: data });
         return {
-            'id': updatedCommandItem.id,
             'quantity': updatedCommandItem.quantity,
             'totalPrice': updatedCommandItem.totalPrice,
-            'productId': updatedCommandItem.productId
+            'commandId': commandId,
+            'productId': productId
         };
     }
 
-    async remove(id: number) {
-        return await this.prisma.commandItem.delete({ where: {id} });
+    async remove(commandId: number, productId: number) {
+        return await this.prisma.commandItem.delete({ where: { commandId_productId: {commandId: commandId, productId: productId} } });
     }
 
     async getItemsByCommandId(commandId: number) {
@@ -65,9 +73,9 @@ export class CommandItemService {
         var items: object[] = [];
         for (const itemRes of itemsResponse) {
             const item = {
-                'id': itemRes.id,
                 'quantity': itemRes.quantity,
                 'totalPrice': itemRes.totalPrice,
+                'commandId': commandId,
                 'productId': itemRes.productId
             };
             items.push(item);

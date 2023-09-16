@@ -88,16 +88,16 @@ export class CommandService {
         return item;
     }
 
-    async updateItem(id: number, itemId: number, updateCommandItemDto: UpdateCommandItemDto) {
-        const item = await this.commandItemSvc.update(itemId, updateCommandItemDto);
+    async updateItem(id: number, productId: number, updateCommandItemDto: UpdateCommandItemDto) {
+        const item = await this.commandItemSvc.update(id, productId, updateCommandItemDto);
         await this.updateTotalPrice(id);
         return item;
     }
 
-    async removeItem(id: number, itemId: number) {
-        const item = await this.commandItemSvc.remove(itemId);
+    async removeItem(id: number, productId: number) {
+        const item = await this.commandItemSvc.remove(id, productId);
         await this.updateTotalPrice(id);
-        return item.id;
+        return await this.commandItemSvc.getItem(id, productId);
     }
 
     async getCommandsByWorkSessionId(workSessionId: number) {
