@@ -12,6 +12,12 @@ Dependencies from the project.
 
 ### Folders
 
+- `docs`: contains some documents for the project. database modeling and system requirements.
+
+- `prisma`: contains the database schema definition and created migrations.
+
+- `src`: cointains the application code.
+
 ---
 ## Setup
 

@@ -146,7 +146,6 @@ export class WorkSessionService {
     /*
         Utility Functions 
     */
-
     private newCode(len: number = 6): string {
         var result           = '';
         var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
