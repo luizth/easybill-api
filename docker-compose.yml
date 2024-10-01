@@ -1,12 +1,9 @@
-version: '3.8'
-
 services:
 
   # Database container -> connection string: postgres://user:password@localhost:5432/
   db:
     container_name: easybill_db
     image: postgres:14
-    restart: always
     environment:
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASSWORD
